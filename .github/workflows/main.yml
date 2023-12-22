@@ -46,6 +46,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: [build]
+    environment: Action Repl.ai Environment
 
     steps:
       - name: Checkout Repository
