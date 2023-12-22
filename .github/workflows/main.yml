@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    environment: Action Repl.ai Environment
 
     runs-on: ubuntu-latest
     env:
@@ -42,6 +43,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    environment: Action Repl.ai Environment
 
     steps:
     - name: Deploy to AWS Lambda
