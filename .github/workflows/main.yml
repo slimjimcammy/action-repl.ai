@@ -11,6 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: Action Repl.ai Environment
 
     steps:
       - name: Checkout Repository
@@ -44,7 +45,6 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    environment: Action Repl.ai Environment
     needs: [build]
 
     steps:
