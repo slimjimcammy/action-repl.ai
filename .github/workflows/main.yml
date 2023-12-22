@@ -1,0 +1,73 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-docker@v2
+
+      - name: Build Docker Image
+        run: docker build -t arai-server backend/
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-docker@v2
+
+      - name: Run Tests
+        run: |
+          # Add your test commands here
+          echo "Running tests..."
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-docker@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Tag Docker Image
+        run: docker tag arai-server ${{ secrets.DOCKER_HUB_USERNAME }}/arai-server:latest
+      
+      - name: Push Docker Image to Docker Hub
+        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/arai-server:latest
+
+      - name: SSH Deploy to Digital Ocean
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DROPLET_IP }}
+          username: ${{ secrets.DROPLET_USER }}
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          script: |
+            CONTAINER_NAME="arai-container"
+            docker stop $CONTAINER_NAME || true
+            docker rm $CONTAINER_NAME|| true
+            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/arai-server:latest
+            docker run -d --name $CONTAINER_NAME -p 8080:5000 ${{ secrets.DOCKER_HUB_USERNAME }}/arai-server:rlatest
