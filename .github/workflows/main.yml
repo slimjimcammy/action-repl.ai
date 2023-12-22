@@ -19,6 +19,12 @@ jobs:
       - name: Build Docker Image
         run: docker build -t arai-server backend/
 
+      - name: Save Docker Image as Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: arai-server
+          path: backend/
+
   test:
     runs-on: ubuntu-latest
 
@@ -34,6 +40,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: Action Repl.ai Environment
+    needs: [build]
 
     steps:
       - name: Checkout Repository
@@ -45,12 +52,18 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
-      - name: Tag Docker Image
-        run: docker tag arai-server ${{ secrets.DOCKER_HUB_USERNAME }}/arai-server:latest
+      - name: Download Docker Image Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: arai-server
+          path: backend/
       
-      - name: Push Docker Image to Docker Hub
-        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/arai-server:latest
-
+      - name: Tag and Push Docker Image to Docker Hub
+        run: |
+          docker load -i backend/arai-server
+          docker tag arai-server ${{ secrets.DOCKER_HUB_USERNAME }}/arai-server:latest
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/arai-server:latest
+      
       - name: SSH Deploy to Digital Ocean
         uses: appleboy/ssh-action@master
         with:
