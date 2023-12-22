@@ -57,7 +57,7 @@ jobs:
         with:
           host: ${{ secrets.DROPLET_IP }}
           username: ${{ secrets.DROPLET_USER }}
-          key: ${{ secrets.DROPLET_SSH_KEY }}
+          key: ${{ secrets.DROPLET_KEY }}
           script: |
             CONTAINER_NAME="arai-container"
             docker stop $CONTAINER_NAME || true
