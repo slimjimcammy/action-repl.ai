@@ -1,13 +1,9 @@
-FROM python:3.12
+FROM public.ecr.aws/lambda/python:latest
 
-WORKDIR /home/backend
+COPY server.py ${LAMBDA_TASK_ROOT}
 
-COPY ./requirements.txt /home/backend/requirements.txt
+COPY requirements.txt ${LAMBDA_TASK_ROOT}
 
 RUN pip install -r requirements.txt
 
-COPY . /home/backend
-
-ENTRYPOINT [ "python3" ]
-
-CMD ["server.py"]
+CMD ["server.handler"]
