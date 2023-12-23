@@ -39,7 +39,7 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: arai-server-ecr
       run: |
-        docker build -t arai-server-ecr backend/
+        docker build --no-cache -t arai-server-ecr backend/
         docker tag arai-server-ecr:latest $ECR_REGISTRY/arai-server-ecr:latest
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.ECR_IMAGE_TAG }}
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:${{ env.ECR_IMAGE_TAG }}"
