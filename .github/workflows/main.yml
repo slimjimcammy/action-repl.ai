@@ -39,7 +39,8 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: arai-server-ecr
       run: |
-        docker build --no-cache -t arai-server-ecr:latest backend/
+        cd backend
+        docker build --no-cache -t arai-server-ecr:latest .
         docker tag arai-server-ecr:latest ${{ secrets.AWS_ECR_IMAGE_URI }}/arai-server-ecr:latest
         docker push ${{ secrets.AWS_ECR_IMAGE_URI }}/arai-server-ecr:latest
 
