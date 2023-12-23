@@ -38,22 +38,15 @@ jobs:
         ECR_REPOSITORY: arai-server-ecr
       run: |
         docker build --no-cache -t arai-server-ecr:latest .
-        docker tag arai-server-ecr:latest 868421578995.dkr.ecr.us-east-1.amazonaws.com/arai-server-ecr:latest
-        docker push 868421578995.dkr.ecr.us-east-1.amazonaws.com/arai-server-ecr:latest
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment: Action Repl.ai Environment
-    env:
-      AWS_DEFAULT_REGION: us-east-1
+        docker tag arai-server-ecr:latest 868421578995.dkr.ecr.us-east-1.amazonaws.com/arai-server-ecr:latest1
+        docker push 868421578995.dkr.ecr.us-east-1.amazonaws.com/arai-server-ecr:latest1
 
     steps:
     - name: Deploy to AWS Lambda
       run: |
         aws lambda update-function-code \
         --function-name ${{ env.AWS_LAMBDA_FUNC_NAME }} \
-        --image-uri 868421578995.dkr.ecr.us-east-1.amazonaws.com/arai-server-ecr:latest
+        --image-uri 868421578995.dkr.ecr.us-east-1.amazonaws.com/arai-server-ecr:latest1
       env:
         AWS_LAMBDA_FUNC_NAME: arai-server-lambda
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
