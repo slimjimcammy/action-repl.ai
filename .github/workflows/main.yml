@@ -19,8 +19,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-      with:
-          path: backend 
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
