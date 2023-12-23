@@ -41,6 +41,17 @@ jobs:
                   docker tag arai-server-ecr:latest 868421578995.dkr.ecr.us-east-1.amazonaws.com/arai-server-ecr:latest
                   docker push 868421578995.dkr.ecr.us-east-1.amazonaws.com/arai-server-ecr:latest
 
+    test:
+        steps:
+            - name: Run Tests
+              run: echo "Runnning Tests!"
+
+    deploy:
+        environment: Action Repl.ai Environment
+        runs-on: ubuntu-latest
+        needs: [test, build]
+
+        steps:
             - name: Deploy to AWS Lambda
               run: |
                   aws lambda update-function-code \
