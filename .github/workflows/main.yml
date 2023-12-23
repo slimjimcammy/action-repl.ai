@@ -48,6 +48,8 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment: Action Repl.ai Environment
+    env:
+      AWS_DEFAULT_REGION: us-east-1
 
     steps:
     - name: Deploy to AWS Lambda
