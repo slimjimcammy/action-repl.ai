@@ -40,8 +40,7 @@ jobs:
         docker build --no-cache -t arai-server-ecr:latest .
         docker tag arai-server-ecr:latest 868421578995.dkr.ecr.us-east-1.amazonaws.com/arai-server-ecr:latest1
         docker push 868421578995.dkr.ecr.us-east-1.amazonaws.com/arai-server-ecr:latest1
-
-    steps:
+        
     - name: Deploy to AWS Lambda
       run: |
         aws lambda update-function-code \
