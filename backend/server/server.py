@@ -2,7 +2,7 @@ from endpoints import *
 import json
 
 def handler(event, context):
-    path = event["resource"]
+    # path = event["resource"]
     return {
         'statusCode': 200,
         'headers': {'Content-Type': 'application/json'},
