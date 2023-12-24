@@ -1,25 +1,19 @@
 def sign_up(event):
-    print("sign-up")
-    return
+    return {"status": 200, "body": "/sign-up"}
 
 def login(event):
-    print("login")
     return
 
 def invite(event):
-    print("invite")
     return
 
 def upload(event):
-    print("upload")
     return
 
 def delete(event):
-    print("delete")
     return
 
 def fetch(event):
-    print("fetch")
     return
 
 ROUTES = {
