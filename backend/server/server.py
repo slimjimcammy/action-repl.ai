@@ -6,7 +6,7 @@ def handler(event, context):
     return {
         'statusCode': 200,
         'headers': {'Content-Type': 'application/json'},
-        'body': json.dumps("here")
+        'body': json.dumps(events)
     }
 
     # return ROUTES[path](event)
