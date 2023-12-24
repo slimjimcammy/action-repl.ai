@@ -1,2 +1,8 @@
+from endpoints import *
+
 def handler(event, context):
-    return event
+    path = event["resource"]
+
+    return ROUTES[path](event)
+
+
