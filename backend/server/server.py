@@ -1,14 +1,16 @@
 from endpoints import *
-import json
+
+def dispatcher(event):
+    path = event["rawPath"]
+    print(f"Checking path: {path}")
+    
+    for ROUTE, CALLBACK in ROUTES:
+        if ROUTE.match(path):
+            return CALLBACK(event)
+    
+    return NOT_FOUND
+
 
 def handler(event, context):
-    # path = event["resource"]
-    return {
-        'statusCode': 200,
-        'headers': {'Content-Type': 'application/json'},
-        'body': json.dumps(event)
-    }
-
-    # return ROUTES[path](event)
-
-
+    response = dispatcher(event)
+    return response

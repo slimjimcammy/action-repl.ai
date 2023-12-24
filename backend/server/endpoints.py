@@ -1,26 +1,59 @@
+import re
+import json
+
+NOT_FOUND = {
+    "statusCode": 404,
+    "headers": {"Content-Type": "application/json"},
+    "body": json.dumps("Error: Not Found")
+}
+
 def sign_up(event):
-    return {"status": 200, "body": "/sign-up"}
+    return {
+        "statusCode": 200,
+        "headers": {"Content-Type": "application/json"},
+        "body": json.dumps("/sign-up")
+    }
 
 def login(event):
-    return
+    return {
+        "statusCode": 200,
+        "headers": {"Content-Type": "application/json"},
+        "body": json.dumps("/login")
+    }
 
 def invite(event):
-    return
+    return {
+        "statusCode": 200,
+        "headers": {"Content-Type": "application/json"},
+        "body": json.dumps("/invite")
+    }
 
 def upload(event):
-    return
+    return {
+        "statusCode": 200,
+        "headers": {"Content-Type": "application/json"},
+        "body": json.dumps("/upload")
+    }
 
 def delete(event):
-    return
+    return {
+        "statusCode": 200,
+        "headers": {"Content-Type": "application/json"},
+        "body": json.dumps("/delete")
+    }
 
 def fetch(event):
-    return
+    return {
+        "statusCode": 200,
+        "headers": {"Content-Type": "application/json"},
+        "body": json.dumps("/fetch")
+    }
 
-ROUTES = {
-    "/sign-up": sign_up,
-    "/login": login,
-    "/invite/{invite-token}": invite,
-    "/upload": upload,
-    "/delete/{deletion-method}": delete, 
-    "/fetch/{team-id}/{user-id}/": fetch
-}
+ROUTES = [
+    (re.compile(r"/sign-up$"), sign_up),
+    (re.compile(r"/login$"), login),
+    (re.compile(r"/invite/(\w+)$"), invite),
+    (re.compile(r"/upload$"), upload),
+    (re.compile(r"/delete/(\w+)$"), delete),
+    (re.compile(r"/fetch/(\w+)/(\w+)$"), fetch)
+]
