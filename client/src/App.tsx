@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import Divestream from "./pages/Divestream.jsx";
+import Divestream from "./pages/Divestream.js";
 
 function App() {
   return (

@@ -7,11 +7,10 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-*node_modules
+node_modules
 dist
 dist-ssr
 *.local
-client/vite.config.js
 
 # Editor directories and files
 .vscode/*
@@ -23,4 +22,3 @@ client/vite.config.js
 *.njsproj
 *.sln
 *.sw?
-.editorconfig

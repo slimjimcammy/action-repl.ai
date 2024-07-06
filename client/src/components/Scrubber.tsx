@@ -1,8 +1,16 @@
 import "../styles/Scrubber.css";
 
-export default function Scrubber({ duration, currentTime, onScrub }) {
-  const handleScrubberChange = (event) => {
-    const newTime = (event.target.value / 100) * duration;
+export default function Scrubber({
+  duration,
+  currentTime,
+  onScrub,
+}: {
+  duration: number;
+  currentTime: number;
+  onScrub: (num: number) => void;
+}) {
+  const handleScrubberChange = (event: any) => {
+    const newTime: number = (event.target.value / 100) * duration;
     onScrub(newTime);
   };
 
