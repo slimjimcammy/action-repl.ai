@@ -1,6 +1,7 @@
 import { FFmpeg } from "@ffmpeg/ffmpeg";
+import Stitcher from "./Stitcher.ts";
 
-export default class ClipStitcher {
+export default class ClipStitcher implements Stitcher {
   max_video_length: number;
   stream_video_path: string;
   clip_video_path: string;
@@ -15,7 +16,7 @@ export default class ClipStitcher {
     this.ffmpeg = new FFmpeg();
   }
 
-  async stitch(clip_buffer: any[], len_clip_in_seconds: number) {
+  async stitch(clip_buffer: any[], len_clip_in_seconds: number): Promise<any> {
     const is_valid_clip = clip_buffer && clip_buffer.length > 0;
     if (is_valid_clip)
       throw new Error("Attempted to stitch with invalid buffer.");
@@ -42,7 +43,7 @@ export default class ClipStitcher {
     // concatenate video file to stream video file
   }
 
-  #constructDuration(seconds: number) {
+  #constructDuration(seconds: number): string {
     let duration = "00:00";
     if (seconds >= 10) {
       let first_digit = seconds / 10;
@@ -55,7 +56,7 @@ export default class ClipStitcher {
     return duration;
   }
 
-  async eraseFront(seconds_to_erase: number) {
+  async eraseFront(seconds_to_erase: number): Promise<any> {
     const in_bounds = seconds_to_erase < this.stream_video_length;
     const valid_num_seconds = seconds_to_erase > 0 && seconds_to_erase < 60;
     if (in_bounds && valid_num_seconds) {

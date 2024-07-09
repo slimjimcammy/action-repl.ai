@@ -3,7 +3,6 @@ import Scrubber from "../components/Scrubber.tsx";
 import Webcam from "react-webcam";
 import ClipStitcher from "../mt/ClipStitcher.ts";
 import "../styles/Divestream.css";
-import "react-scrubber/lib/scrubber.css";
 
 const FIVE_SECONDS = 5000;
 
@@ -39,14 +38,7 @@ export default function Divestream() {
 
       media_recorder.current.start();
       const interval = setInterval(() => {
-        if (
-          media_recorder.current &&
-          media_recorder.current.state === "recording"
-        ) {
-          media_recorder.current.stop();
-          media_recorder.current.start();
-          sendClip();
-        }
+        sendClip();
       }, FIVE_SECONDS);
 
       return () => {
@@ -59,7 +51,7 @@ export default function Divestream() {
         }
       };
     }
-  }, []);
+  }, [video_element]);
 
   async function sendClip() {
     await stitcher.stitch(clip_buffer, 5);
